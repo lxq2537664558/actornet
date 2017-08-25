@@ -30,6 +30,10 @@ const colorDefine = `
 
 func StartSystem() {
 
+	if inited {
+		return
+	}
+
 	// 非测试环境时, 打开加色
 	if flag.Lookup("test.v") == nil {
 		golog.SetColorDefine("*", colorDefine)
@@ -39,7 +43,7 @@ func StartSystem() {
 	OnReset.Invoke()
 
 	exitSignal = make(chan int)
-
+	inited = true
 }
 
 // 退出
@@ -53,8 +57,3 @@ func LoopSystem() int {
 }
 
 var inited bool
-
-func init() {
-	inited = true
-
-}

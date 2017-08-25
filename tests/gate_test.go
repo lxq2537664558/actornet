@@ -12,10 +12,7 @@ import (
 	"time"
 )
 
-func TestLinkBackend(t *testing.T) {
-
-	actor.EnableDebug = true
-
+func startBackend() {
 	actor.StartSystem()
 
 	domain := actor.CreateDomain("backend")
@@ -73,10 +70,7 @@ func TestLinkBackend(t *testing.T) {
 	time.Sleep(time.Second)
 }
 
-func TestLinkGate(t *testing.T) {
-
-	actor.EnableDebug = true
-
+func startGate() {
 	actor.StartSystem()
 
 	nexus.Listen("127.0.0.1:7111", "gate")
@@ -88,8 +82,7 @@ func TestLinkGate(t *testing.T) {
 	time.Sleep(time.Second)
 }
 
-func TestLinkClient(t *testing.T) {
-
+func startClient() {
 	peer := socket.NewConnector(nil)
 
 	peer.Start("127.0.0.1:8031")
@@ -121,4 +114,26 @@ func TestLinkClient(t *testing.T) {
 	})
 
 	wg.Wait()
+}
+
+// 单独测试后台
+func TestLinkBackend(t *testing.T) {
+	startBackend()
+}
+
+// 单独测试网关
+func TestLinkGate(t *testing.T) {
+	startGate()
+}
+
+// 单独测试客户端
+func TestLinkClient(t *testing.T) {
+	startClient()
+}
+
+// 后台, 网关客户端合体在一个进程测试
+func TestAllInOneGate(t *testing.T) {
+	go startGate()
+	go startBackend()
+	startClient()
 }

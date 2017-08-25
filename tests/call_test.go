@@ -44,6 +44,8 @@ func TestCrossProcessCallServer(t *testing.T) {
 
 func TestCrossProcessCallClient(t *testing.T) {
 
+	actor.StartSystem()
+
 	domain := actor.CreateDomain("client")
 	actor.StartSystem()
 
