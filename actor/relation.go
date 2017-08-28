@@ -1,11 +1,13 @@
 package actor
 
 type Relation interface {
-	AddChild(*PID)
-
 	ParentPID() *PID
 
-	SetParentPID(ppid *PID)
+	addChild(*PID)
+
+	setParentPID(ppid *PID)
+
+	broadcast(interface{})
 }
 
 type RelationImplement struct {
@@ -26,11 +28,11 @@ func (self *RelationImplement) ParentPID() *PID {
 	return self.ppid
 }
 
-func (self *RelationImplement) SetParentPID(ppid *PID) {
+func (self *RelationImplement) setParentPID(ppid *PID) {
 	self.ppid = ppid
 }
 
-func (self *RelationImplement) AddChild(pid *PID) {
+func (self *RelationImplement) addChild(pid *PID) {
 
 	childProc := pid.ref()
 
@@ -38,9 +40,16 @@ func (self *RelationImplement) AddChild(pid *PID) {
 		panic("child can not be nil when add child")
 	}
 
-	childProc.SetParentPID(self.proc.PID())
+	childProc.setParentPID(self.proc.PID())
 
 	self.childs = append(self.childs, pid)
+}
+
+func (self *RelationImplement) broadcast(data interface{}) {
+
+	for _, c := range self.childs {
+		c.Tell(data)
+	}
 }
 
 func NewRelation(proc Process, dm *Domain) *RelationImplement {

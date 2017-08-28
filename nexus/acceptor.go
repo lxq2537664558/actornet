@@ -8,7 +8,7 @@ import (
 )
 
 // 启动本机的listen
-func Listen(address string, domain string) {
+func Listen(address string) {
 
 	peer := socket.NewAcceptor(nil)
 	peer.Start(address)

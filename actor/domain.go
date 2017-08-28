@@ -118,7 +118,7 @@ func (self *Domain) Spawn(t *ActorTemplate) *PID {
 
 	pproc := t.ppid.ref()
 	if pproc != nil {
-		pproc.AddChild(pid)
+		pproc.addChild(pid)
 	}
 
 	log.Debugf("#spawn actor: %s", pid.String())

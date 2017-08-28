@@ -19,9 +19,11 @@ var (
 	gateDomain *actor.Domain
 )
 
+const gateDomainName = "gate"
+
 func Listen(address string, backendAssit *actor.PID) {
 
-	gateDomain = actor.CreateDomain("gate")
+	gateDomain = actor.CreateDomain(gateDomainName)
 
 	backendAssitPID = backendAssit
 
@@ -55,7 +57,7 @@ func Listen(address string, backendAssit *actor.PID) {
 
 				backendPID := actor.NewPID(c.Source().Domain, msg.ID)
 
-				outboundID := MakeOutboundID(clientSes.ID())
+				outboundID := makeOutboundID(clientSes.ID())
 
 				outboundPID := gateDomain.Spawn(actor.NewTemplate().WithID(outboundID).WithCreator(newOutboundClient(clientSes)))
 
@@ -72,6 +74,10 @@ func Listen(address string, backendAssit *actor.PID) {
 	}))
 }
 
-func MakeOutboundID(clientSessionID int64) string {
+func makeOutboundID(clientSessionID int64) string {
 	return fmt.Sprintf("sid:%d", clientSessionID)
+}
+
+func MakeOutboundPID(clientSessionID int64) *actor.PID {
+	return actor.NewPID(gateDomainName, makeOutboundID(clientSessionID))
 }

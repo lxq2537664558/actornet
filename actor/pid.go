@@ -58,6 +58,11 @@ func (self *PID) Tell(data interface{}) {
 	self.TellBySender(data, nil)
 }
 
+func (self *PID) Broadcast(data interface{}) {
+
+	self.ref().broadcast(data)
+}
+
 func (self *PID) TellBySender(data interface{}, sender *PID) {
 
 	if self == nil {

@@ -15,7 +15,7 @@ func TestCrossProcessNotifyServer(t *testing.T) {
 
 	domain := actor.CreateDomain("server")
 
-	nexus.Listen("127.0.0.1:8081", "server")
+	nexus.Listen("127.0.0.1:8081")
 
 	var wg sync.WaitGroup
 

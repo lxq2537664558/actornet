@@ -49,6 +49,9 @@ func main() {
 	queue.StartLoop()
 
 	ReadConsole(func(str string) {
+		if len(str) == 0 {
+			return
+		}
 
 		if str[0] == '/' {
 			strlist := strings.Split(str, " ")

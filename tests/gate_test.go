@@ -73,7 +73,7 @@ func startBackend() {
 func startGate() {
 	actor.StartSystem()
 
-	nexus.Listen("127.0.0.1:7111", "gate")
+	nexus.Listen("127.0.0.1:7111")
 
 	gate.Listen("127.0.0.1:8031", actor.NewPID("backend", "lobby"))
 
