@@ -4,21 +4,21 @@ package proto
 
 import (
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/goobjfmt"
 	"reflect"
+	"fmt"
 )
 
-func (self *TestMsgACK) String() string    { return goobjfmt.CompactTextString(self) }
-func (self *BindClientREQ) String() string { return goobjfmt.CompactTextString(self) }
-func (self *BindClientACK) String() string { return goobjfmt.CompactTextString(self) }
-func (self *PID) String() string           { return goobjfmt.CompactTextString(self) }
-func (self *Start) String() string         { return goobjfmt.CompactTextString(self) }
-func (self *Stop) String() string          { return goobjfmt.CompactTextString(self) }
-func (self *SystemExit) String() string    { return goobjfmt.CompactTextString(self) }
-func (self *NexusOpen) String() string     { return goobjfmt.CompactTextString(self) }
-func (self *NexusClose) String() string    { return goobjfmt.CompactTextString(self) }
-func (self *RouteACK) String() string      { return goobjfmt.CompactTextString(self) }
-func (self *DomainSyncACK) String() string { return goobjfmt.CompactTextString(self) }
+func (self *TestMsgACK) String() string    { return fmt.Sprintf("%+v", *self) }
+func (self *BindClientREQ) String() string { return fmt.Sprintf("%+v", *self) }
+func (self *BindClientACK) String() string { return fmt.Sprintf("%+v", *self) }
+func (self *PID) String() string           { return fmt.Sprintf("%+v", *self) }
+func (self *Start) String() string         { return fmt.Sprintf("%+v", *self) }
+func (self *Stop) String() string          { return fmt.Sprintf("%+v", *self) }
+func (self *SystemExit) String() string    { return fmt.Sprintf("%+v", *self) }
+func (self *NexusOpen) String() string     { return fmt.Sprintf("%+v", *self) }
+func (self *NexusClose) String() string    { return fmt.Sprintf("%+v", *self) }
+func (self *RouteACK) String() string      { return fmt.Sprintf("%+v", *self) }
+func (self *DomainSyncACK) String() string { return fmt.Sprintf("%+v", *self) }
 
 func init() {
 

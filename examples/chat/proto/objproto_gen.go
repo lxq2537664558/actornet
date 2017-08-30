@@ -4,13 +4,13 @@ package chatproto
 
 import (
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/goobjfmt"
 	"reflect"
+	"fmt"
 )
 
-func (self *ChatREQ) String() string   { return goobjfmt.CompactTextString(self) }
-func (self *ChatACK) String() string   { return goobjfmt.CompactTextString(self) }
-func (self *RenameACK) String() string { return goobjfmt.CompactTextString(self) }
+func (self *ChatREQ) String() string   { return fmt.Sprintf("%+v", *self) }
+func (self *ChatACK) String() string   { return fmt.Sprintf("%+v", *self) }
+func (self *RenameACK) String() string { return fmt.Sprintf("%+v", *self) }
 
 func init() {
 
