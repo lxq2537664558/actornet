@@ -42,6 +42,10 @@ func (self *PID) ref() Process {
 		return p
 	}
 
+	if RemoteProcessCreator == nil {
+		return nil
+	}
+
 	proc := RemoteProcessCreator(self, dm)
 
 	if err := dm.Add(proc); err != nil {
@@ -120,6 +124,11 @@ func NewPID(domain, id string) *PID {
 		Domain: domain,
 		Id:     id,
 	}
+}
+
+func NewPIDFromProto(pid proto.PID) *PID {
+
+	return &PID{Domain: pid.Domain, Id: pid.Id}
 }
 
 var RemoteProcessCreator func(*PID, *Domain) Process

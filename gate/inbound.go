@@ -15,7 +15,14 @@ func (self *inboundHandler) Call(ev *cellnet.Event) {
 
 		backendPID, outboundPID := GetSessionBinding(ev.Ses)
 
-		if outboundPID != nil && backendPID != nil {
+		if targetPID := targetRoutePID(ev.MsgID); targetPID != nil {
+
+			name := cellnet.MessageNameByID(ev.MsgID)
+
+			log.Debugf("route '%s' to pid: %s -> %s", name, outboundPID.String(), targetPID.String())
+			targetPID.TellBySender(ev.Msg, outboundPID)
+
+		} else if outboundPID != nil && backendPID != nil {
 
 			log.Debugf("direct route: %s -> %s", outboundPID.String(), backendPID.String())
 
@@ -28,7 +35,7 @@ func (self *inboundHandler) Call(ev *cellnet.Event) {
 			switch ev.Msg.(type) {
 			case *proto.BindClientREQ:
 
-				backendAssitPID.TellBySender(&proto.BindClientREQ{ev.Ses.ID()}, receiptorPID)
+				backendAssitPID.TellBySender(&proto.BindClientREQ{ev.Ses.ID()}, backendMgrPID)
 			}
 
 		}

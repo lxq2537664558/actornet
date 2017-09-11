@@ -74,7 +74,7 @@ func onRouter(ev *cellnet.Event) {
 		}
 
 		if msg.Source.IsValid() {
-			m.SourcePID = &actor.PID{Domain: msg.Source.Domain, Id: msg.Source.Id}
+			m.SourcePID = actor.NewPIDFromProto(msg.Source)
 		}
 
 		if checkHijack(m) {

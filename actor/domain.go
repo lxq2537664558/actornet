@@ -7,6 +7,7 @@ import (
 	"github.com/davyxu/cellnet"
 	"reflect"
 	"strconv"
+	"sync/atomic"
 )
 
 type Domain struct {
@@ -15,6 +16,8 @@ type Domain struct {
 	RemoteContext interface{}
 
 	processByID map[string]Process
+
+	idgen int64
 }
 
 func (self *Domain) String() string {
@@ -93,7 +96,8 @@ func (self *Domain) Spawn(t *ActorTemplate) *PID {
 
 	// 生成流水名字
 	if t.id == "" {
-		t.id = strconv.FormatInt(util.GenPersistantID(0), 10)
+		newid := atomic.AddInt64(&self.idgen, 1)
+		t.id = strconv.FormatInt(newid, 10)
 	}
 
 	pid := self.newPID(t.id)

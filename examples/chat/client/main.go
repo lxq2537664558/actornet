@@ -40,8 +40,8 @@ func main() {
 		ev.Send(&proto.BindClientREQ{})
 	})
 
-	cellnet.RegisterMessage(peer, "chatproto.ChatACK", func(ev *cellnet.Event) {
-		msg := ev.Msg.(*chatproto.ChatACK)
+	cellnet.RegisterMessage(peer, "chatproto.PublicChatACK", func(ev *cellnet.Event) {
+		msg := ev.Msg.(*chatproto.PublicChatACK)
 
 		log.Infof("%s(%s) say: %s", msg.Name, msg.User.String(), msg.Content)
 	})
@@ -71,7 +71,7 @@ func main() {
 			}
 		}
 
-		peer.(socket.Connector).DefaultSession().Send(&chatproto.ChatREQ{
+		peer.(socket.Connector).DefaultSession().Send(&chatproto.PublicChatREQ{
 			Content: str,
 		})
 

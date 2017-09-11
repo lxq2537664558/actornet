@@ -14,7 +14,7 @@ func (self PID) IsValid() bool {
 }
 
 // ============================================
-// 系统事件
+// Actor
 // ============================================
 
 // 一个Actor启动时
@@ -33,6 +33,10 @@ type SystemExit struct {
 	Code int32
 }
 
+// ============================================
+// Nexus
+// ============================================
+
 // 进程互联通道打开
 // nexus -> any
 type NexusOpen struct {
@@ -44,10 +48,6 @@ type NexusOpen struct {
 type NexusClose struct {
 	Domain string
 }
-
-// ============================================
-// 组件通信消息
-// ============================================
 
 // 路由到另外一个进程
 type RouteACK struct {
@@ -62,4 +62,28 @@ type RouteACK struct {
 // 领域标识
 type DomainSyncACK struct {
 	DomainNames []string
+}
+
+// ============================================
+// Gate
+// ============================================
+
+// 客户端请求后台服务器绑定
+// client -> gate -> gate_assit
+type BindClientREQ struct {
+	ClientSessionID int64 // 网关上的id (透传)
+
+}
+
+// gate_assit -> gate_receiptor -> client
+type BindClientACK struct {
+	ClientSessionID int64  // 网关上的id (透传)
+	ID              string // 用户后台的网关用户pid.ID
+}
+
+// 将消息固定转发到某个PID
+// backend -> gate
+type RouteToPIDACK struct {
+	Target  PID
+	MsgName string
 }

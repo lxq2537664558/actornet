@@ -5,15 +5,14 @@ import (
 )
 
 // 聊天消息
-// client -> server
-type ChatREQ struct {
-	To      proto.PID // 玩家要发给目标
+// client -> 'lobby'
+type PublicChatREQ struct {
 	Content string
 }
 
 // 聊天消息
-// server -> client
-type ChatACK struct {
+// 'lobby' -> client
+type PublicChatACK struct {
 	User    proto.PID
 	Name    string
 	Content string
@@ -23,4 +22,11 @@ type ChatACK struct {
 // client <-> server
 type RenameACK struct {
 	NewName string
+}
+
+type GetNameREQ struct {
+}
+
+type GetNameACK struct {
+	Name string
 }
